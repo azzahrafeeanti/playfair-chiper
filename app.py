@@ -7,7 +7,7 @@ def generate_matrix(key):
     key = re.sub(r'[^A-Z]', '', key.upper()).replace('J', 'I')
     matrix_str = ""
     seen = set()
-    adasdasdadasdasd
+    adasdasdadasdas
   
     for char in key:
         if char not in seen:
