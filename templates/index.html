@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Sistem Kriptografi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              uin: {
+                green: "#005e2f",
+                gold: "#d4a017",
+                light: "#f8f9fa",
+                accent: "#e6b325",
+              },
+            },
+            fontFamily: {
+              serif: ["Cinzel", "serif"],
+              sans: ["Lato", "sans-serif"],
+            },
+            backgroundImage: {
+              mosaic:
+                "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4a017' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        background-color: #f3f4f6;
+      }
+      .uin-card {
+        background: white;
+        border-top: 4px solid #d4a017;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        border-radius: 0.5rem;
+      }
+      .btn-uin {
+        transition: all 0.3s ease;
+      }
+      .btn-uin:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px
+          rgba(212, 160, 23, 0.3);
+      }
+    </style>
+  </head>
+  <body
+    class="font-sans text-gray-700 bg-mosaic min-h-screen flex flex-col"
+  >
+    <nav
+      class="bg-uin-green text-white shadow-lg relative overflow-hidden"
+    >
+      <div
+        class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/arabesque.png')]"
+      ></div>
+
+      <div
+        class="max-w-7xl mx-auto px-4 py-4 relative z-10 flex items-center justify-between flex-wrap"
+      >
+        <div class="flex items-center gap-4">
+          <div
+            class="w-12 h-12 bg-white rounded-full flex items-center justify-center border-2 border-uin-gold"
+          >
+            <svg
+              class="w-8 h-8 text-uin-green"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.5"
+                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+              />
+            </svg>
+          </div>
+          <div>
+            <h1
+              class="text-xl md:text-2xl font-serif font-bold tracking-wide text-uin-gold"
+            >
+              Playfair Ciphere
+            </h1>
+            <p
+              class="text-xs md:text-sm text-gray-200"
+            >
+              Python & Tailwind CSS
+            </p>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main
+      class="flex-grow max-w-7xl mx-auto w-full p-4 md:p-8"
+    >
+      <div
+        class="grid grid-cols-1 lg:grid-cols-12 gap-8"
+      >
+        <div class="lg:col-span-8 space-y-6">
+          <div class="uin-card p-6 md:p-8">
+            <h2
+              class="text-xl font-serif font-bold text-uin-green mb-6 border-b border-gray-200 pb-2 flex items-center gap-2"
+            >
+              <span class="text-uin-gold">❖</span>
+              Konfigurasi Input
+            </h2>
+
+            <div class="space-y-6">
+              <div>
+                <label
+                  class="block text-sm font-bold text-gray-600 mb-2 uppercase tracking-wider"
+                  >Kunci (Keyword)</label
+                >
+                <div class="relative">
+                  <span
+                    class="absolute inset-y-0 left-0 pl-3 flex items-center text-uin-gold"
+                  >
+                    <svg
+                      class="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"
+                      />
+                    </svg>
+                  </span>
+                  <input
+                    type="text"
+                    id="keyInput"
+                    placeholder="Masukkan kata kunci (contoh: INTEGRASI)"
+                    class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-uin-gold focus:border-transparent transition-all"
+                  />
+                </div>
+              </div>
+
+              <div
+                class="flex rounded-lg bg-gray-100 p-1 shadow-inner"
+              >
+                <button
+                  onclick="setMode('encrypt')"
+                  id="encryptBtn"
+                  class="flex-1 py-2 rounded-md font-bold text-sm transition-all bg-uin-green text-white shadow-sm"
+                >
+                  ENKRIPSI
+                </button>
+                <button
+                  onclick="setMode('decrypt')"
+                  id="decryptBtn"
+                  class="flex-1 py-2 rounded-md font-bold text-sm transition-all text-gray-500 hover:text-uin-green"
+                >
+                  DEKRIPSI
+                </button>
+              </div>
+
+              <div>
+                <label
+                  class="block text-sm font-bold text-gray-600 mb-2 uppercase tracking-wider"
+                  id="inputLabel"
+                  >Plaintext</label
+                >
+                <textarea
+                  id="inputText"
+                  placeholder="Masukkan teks di sini..."
+                  class="w-full h-32 p-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-uin-green focus:border-transparent transition-all resize-none"
+                ></textarea>
+              </div>
+
+              <button
+                onclick="processTextWithPython()"
+                class="w-full btn-uin bg-gradient-to-r from-uin-green to-[#004d26] text-white font-serif font-bold py-4 rounded-lg shadow-md flex items-center justify-center gap-2"
+              >
+                <span>PROSES DATA</span>
+                <svg
+                  class="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                  />
+                </svg>
+              </button>
+
+              <div
+                id="loading"
+                class="hidden text-center text-uin-gold font-bold animate-pulse"
+              >
+                Sedang memproses data...
+              </div>
+
+              <div
+                id="errorMsg"
+                class="hidden bg-red-50 text-red-700 p-4 rounded-lg border-l-4 border-red-600 text-sm"
+              ></div>
+            </div>
+          </div>
+
+          <div
+            id="outputSection"
+            class="hidden uin-card p-6 md:p-8 bg-gradient-to-br from-white to-yellow-50"
+          >
+            <div
+              class="flex justify-between items-center mb-4"
+            >
+              <h3
+                class="text-lg font-bold text-gray-700 font-serif"
+              >
+                Hasil Output
+              </h3>
+              <button
+                onclick="copyToClipboard()"
+                class="text-xs font-bold text-uin-green hover:text-uin-gold border border-uin-green hover:border-uin-gold px-3 py-1 rounded transition-colors"
+              >
+                SALIN TEKS
+              </button>
+            </div>
+            <div
+              class="bg-white p-4 rounded border border-gray-200 shadow-inner"
+            >
+              <p
+                id="outputText"
+                class="font-mono text-lg text-gray-800 break-all tracking-wider"
+              ></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-4 space-y-6">
+          <div
+            id="matrixSection"
+            class="hidden uin-card p-6"
+          >
+            <h3
+              class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4 text-center"
+            >
+              Matriks Playfair
+            </h3>
+            <div
+              id="matrixGrid"
+              class="grid grid-cols-5 gap-2 bg-gray-100 p-2 rounded-lg border border-gray-200"
+            ></div>
+            <p
+              class="text-xs text-center text-gray-400 mt-2 italic"
+            >
+              Matriks 5x5 (J digabung dengan I)
+            </p>
+          </div>
+
+          <div
+            id="processSection"
+            class="hidden uin-card p-0 overflow-hidden flex flex-col max-h-[500px]"
+          >
+            <div
+              class="bg-gray-50 p-4 border-b border-gray-200"
+            >
+              <h3
+                class="text-sm font-bold text-gray-700 font-serif"
+              >
+                Log Algoritma
+              </h3>
+            </div>
+            <div
+              id="processSteps"
+              class="p-4 overflow-y-auto space-y-3 bg-white text-sm"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer
+      class="bg-white border-t border-gray-200 py-6 mt-8"
+    >
+      <div
+        class="max-w-7xl mx-auto px-4 text-center"
+      >
+        <p
+          class="text-uin-green font-bold text-sm"
+        >
+          Azzahra Nur Addin Afeeanti - 23106050079
+        </p>
+        <p class="text-gray-400 text-xs mt-1">
+          &copy; 2025 Informatika
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      let currentMode = "encrypt";
+
+      function setMode(mode) {
+        currentMode = mode;
+        const encryptBtn =
+          document.getElementById("encryptBtn");
+        const decryptBtn =
+          document.getElementById("decryptBtn");
+        const inputLabel =
+          document.getElementById("inputLabel");
+
+        if (mode === "encrypt") {
+          encryptBtn.className =
+            "flex-1 py-2 rounded-md font-bold text-sm transition-all bg-uin-green text-white shadow-sm";
+          decryptBtn.className =
+            "flex-1 py-2 rounded-md font-bold text-sm transition-all text-gray-500 hover:text-uin-green";
+          inputLabel.textContent =
+            "Plaintext (Pesan Asli)";
+        } else {
+          encryptBtn.className =
+            "flex-1 py-2 rounded-md font-bold text-sm transition-all text-gray-500 hover:text-uin-green";
+          decryptBtn.className =
+            "flex-1 py-2 rounded-md font-bold text-sm transition-all bg-uin-gold text-white shadow-sm";
+          inputLabel.textContent =
+            "Ciphertext (Pesan Terenkripsi)";
+        }
+      }
+
+      async function processTextWithPython() {
+        const key =
+          document.getElementById(
+            "keyInput"
+          ).value;
+        const text =
+          document.getElementById(
+            "inputText"
+          ).value;
+        const errorMsg =
+          document.getElementById("errorMsg");
+        const loading =
+          document.getElementById("loading");
+        const outputSection =
+          document.getElementById(
+            "outputSection"
+          );
+        const matrixSection =
+          document.getElementById(
+            "matrixSection"
+          );
+        const processSection =
+          document.getElementById(
+            "processSection"
+          );
+
+        // Reset UI
+        errorMsg.classList.add("hidden");
+        outputSection.classList.add("hidden");
+        matrixSection.classList.add("hidden");
+        processSection.classList.add("hidden");
+
+        if (!key.trim() || !text.trim()) {
+          errorMsg.textContent =
+            "Harap lengkapi Kata Kunci dan Teks Input.";
+          errorMsg.classList.remove("hidden");
+          return;
+        }
+
+        loading.classList.remove("hidden");
+
+        try {
+          const response = await fetch(
+            "/process",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type":
+                  "application/json",
+              },
+              body: JSON.stringify({
+                key,
+                text,
+                mode: currentMode,
+              }),
+            }
+          );
+
+          const data = await response.json();
+          loading.classList.add("hidden");
+
+          if (response.status !== 200) {
+            throw new Error(
+              data.error ||
+                "Terjadi kesalahan sistem."
+            );
+          }
+
+          // Render Output
+          document.getElementById(
+            "outputText"
+          ).textContent = data.result;
+          outputSection.classList.remove(
+            "hidden"
+          );
+
+          // Render Matriks (Style UIN Gold)
+          const matrixGrid =
+            document.getElementById("matrixGrid");
+          matrixGrid.innerHTML = "";
+          data.matrix.flat().forEach((char) => {
+            const cell =
+              document.createElement("div");
+            cell.className =
+              "bg-white text-uin-green font-serif font-bold text-xl h-10 flex items-center justify-center rounded border border-uin-gold/30 shadow-sm";
+            cell.textContent = char;
+            matrixGrid.appendChild(cell);
+          });
+          matrixSection.classList.remove(
+            "hidden"
+          );
+
+          // Render Steps
+          const stepsDiv =
+            document.getElementById(
+              "processSteps"
+            );
+          stepsDiv.innerHTML = "";
+          data.steps.forEach((step, idx) => {
+            const el =
+              document.createElement("div");
+            el.className =
+              "border-l-4 border-uin-gold pl-3 py-1";
+            el.innerHTML = `
+                        <div class="flex justify-between items-center text-xs text-gray-400 mb-1">
+                            <span>Langkah ${
+                              idx + 1
+                            }</span>
+                            <span class="bg-gray-100 px-2 py-0.5 rounded text-uin-green font-semibold">${
+                              step.rule
+                            }</span>
+                        </div>
+                        <div class="font-mono text-gray-700">
+                            <span class="bg-red-50 text-red-600 px-1 rounded">${
+                              step.input
+                            }</span>
+                            <span class="text-gray-400 mx-1">➜</span>
+                            <span class="bg-green-50 text-green-700 px-1 rounded font-bold">${
+                              step.output
+                            }</span>
+                        </div>
+                    `;
+            stepsDiv.appendChild(el);
+          });
+          processSection.classList.remove(
+            "hidden"
+          );
+        } catch (error) {
+          loading.classList.add("hidden");
+          errorMsg.textContent = `Error: ${error.message}`;
+          errorMsg.classList.remove("hidden");
+        }
+      }
+
+      function copyToClipboard() {
+        const val =
+          document.getElementById(
+            "outputText"
+          ).textContent;
+        navigator.clipboard.writeText(val);
+        alert("Teks berhasil disalin.");
+      }
+    </script>
+  </body>
+</html>
